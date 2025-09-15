@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Transaction, TransactionType } from '../types';
 import { TrashIcon } from './icons/TrashIcon';
@@ -22,7 +21,6 @@ const TransactionItem: React.FC<{ transaction: Transaction; onDelete: (id: numbe
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
-        // Ajuste para mostrar la fecha local correctamente sin problemas de zona horaria
         const userTimezoneOffset = date.getTimezoneOffset() * 60000;
         const localDate = new Date(date.getTime() + userTimezoneOffset);
         return localDate.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });

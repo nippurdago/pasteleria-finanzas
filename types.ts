@@ -1,4 +1,3 @@
-
 export enum TransactionType {
     Income = 'income',
     Expense = 'expense',
@@ -30,4 +29,5 @@ export interface Transaction {
     type: TransactionType;
     category: IncomeCategory | ExpenseCategory;
     created_at?: string;
+    user_id: string;
 }

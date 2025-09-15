@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { Transaction, TransactionType, IncomeCategory, ExpenseCategory } from '../types';
 import { INCOME_CATEGORIES, EXPENSE_CATEGORIES } from '../constants';
 
 interface TransactionFormProps {
-    onAddTransaction: (transaction: Omit<Transaction, 'id' | 'created_at'>) => void;
+    onAddTransaction: (transaction: Omit<Transaction, 'id' | 'created_at' | 'user_id'>) => void;
 }
 
 const TransactionForm: React.FC<TransactionFormProps> = ({ onAddTransaction }) => {

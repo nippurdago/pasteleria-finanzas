@@ -1,4 +1,3 @@
-
 import { IncomeCategory, ExpenseCategory } from './types';
 
 export const INCOME_CATEGORIES: IncomeCategory[] = [
@@ -18,4 +17,3 @@ export const EXPENSE_CATEGORIES: ExpenseCategory[] = [
     ExpenseCategory.Supplies,
     ExpenseCategory.Other,
 ];
-   
