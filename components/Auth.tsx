@@ -6,24 +6,20 @@ const Auth: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isLoginView, setIsLoginView] = useState(true);
-    const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
-    const handleAuthAction = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setLoading(true);
-        setMessage('');
         setError('');
 
-        if (isLoginView) {
-            const { error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) setError(error.message);
-        } else {
-            const { data, error } = await supabase.auth.signUp({ email, password });
-            if (error) setError(error.message);
-            if (data.user) setMessage('¡Registro exitoso! Por favor, revisa tu correo para verificar tu cuenta.');
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        
+        if (error) {
+            setError("Correo o contraseña incorrectos. Por favor, inténtalo de nuevo.");
+            console.error("Error de inicio de sesión:", error.message);
         }
+
         setLoading(false);
     };
 
@@ -36,13 +32,13 @@ const Auth: React.FC = () => {
                     <h1 className="text-3xl font-bold text-gray-700 mt-2 font-serif">Pastelería Finanzas</h1>
                 </div>
                 <h2 className="text-2xl font-bold text-center text-gray-700 mb-2 font-serif">
-                    {isLoginView ? 'Iniciar Sesión' : 'Crear Cuenta'}
+                    Acceso para Empleados
                 </h2>
                 <p className="text-center text-gray-500 mb-6">
-                    {isLoginView ? 'Ingresa para continuar.' : 'Crea una cuenta para empezar a registrar tus finanzas.'}
+                    Ingresa con tus credenciales para continuar.
                 </p>
                 
-                <form onSubmit={handleAuthAction} className="space-y-4">
+                <form onSubmit={handleLogin} className="space-y-4">
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-600 mb-1">Correo Electrónico</label>
                         <input
@@ -73,19 +69,13 @@ const Auth: React.FC = () => {
                             disabled={loading}
                             className="w-full py-3 mt-2 text-white font-bold bg-pink-500 rounded-lg shadow-md hover:bg-pink-600 transition-colors disabled:bg-pink-300"
                         >
-                            {loading ? 'Cargando...' : (isLoginView ? 'Ingresar' : 'Registrarse')}
+                            {loading ? 'Cargando...' : 'Ingresar'}
                         </button>
                     </div>
                 </form>
 
                 {error && <p className="mt-4 text-center text-red-500 bg-red-100 p-3 rounded-lg">{error}</p>}
-                {message && <p className="mt-4 text-center text-green-600 bg-green-100 p-3 rounded-lg">{message}</p>}
-
-                <div className="mt-6 text-center">
-                    <button onClick={() => { setIsLoginView(!isLoginView); setError(''); setMessage(''); }} className="text-sm text-pink-600 hover:underline">
-                        {isLoginView ? '¿No tienes una cuenta? Regístrate' : '¿Ya tienes una cuenta? Inicia Sesión'}
-                    </button>
-                </div>
+                
             </div>
         </div>
     );
